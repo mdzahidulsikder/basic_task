@@ -4,12 +4,10 @@ public class Car extends Vehicle implements Navigable{
         super(x, y);
     }
 
-
     @Override
     void displayInfo() {
         System.out.println("Car - Position: (" + positionX + ", " + positionY + ")");
     }
-
 
     @Override
     public void turnLeft() {
