@@ -1,0 +1,18 @@
+Question 3: Extending Abstract Classes and Interfaces
+
+1.  You are working on a simulation game where different types of vehicles interact in a virtual city.
+    Create a simulation framework using abstract classes and interfaces.
+
+2.  Design an abstract class Vehicle
+        with properties like positionX and positionY,
+        and methods like moveTo(double x, double y) and displayInfo().
+
+3.  Implement an interface Navigable with methods like turnLeft(), turnRight(), and stop().
+
+4.  Design a class Car that extends the Vehicle abstract class and implements the Navigable interface.
+
+5.  Additionally, create an interface Flyable with methods like takeOff(), flyTo(double x, double y), and land().
+
+6.  Design a class Airplane that extends the Vehicle abstract class and implements the Flyable interface.
+
+7.  Provide an example of using these classes and interfaces within a simulated environment.

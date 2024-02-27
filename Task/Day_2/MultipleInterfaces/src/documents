@@ -1,0 +1,16 @@
+
+Multiple Interfaces and Implementation
+
+1. You are developing a shape manipulation library.
+Design a system using abstract classes and interfaces to handle various shapes.
+
+2.  Create an abstract class Shape with properties
+    like area and perimeter,
+    along with methods like calculateArea() and calculatePerimeter().
+
+3. Implement interfaces Drawable (with a draw() method) and Resizable (with a resize(double factor) method)
+    to indicate additional behaviors.
+4. Design two specific shape classes – Circle and Rectangle –
+
+5. that inherit from Shape and implement the appropriate interfaces.
+Provide an example demonstrating how you can create instances of these shapes and utilize their methods.
