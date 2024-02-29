@@ -1,0 +1,22 @@
+ Logger Documentation
+
+
+
+
+
+
+
+     Need to  task
+      1. class = Logger (Single Design Pattern)
+      2. method = doMessage(String message) = message + time
+      3. Implement the Logger class(once) in main class
+      4. check instance of Logger class  are same then give proper message.
+
+
+    Explicit of my task :
+      1) Singleton constructor private
+      2) get method will static method to call directly
+      3) static method e constructor 1 bar call dite hobe
+      4) variable static korte hobe karon static method theke variable call dite hole (1) constructor or (2) static method need.
+      5) object create with the help of method
+      6) new has code created to check if the instance are same or not
