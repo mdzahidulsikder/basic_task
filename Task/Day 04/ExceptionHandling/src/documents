@@ -1,0 +1,10 @@
+        ExceptionHandling
+
+task : Sign up page
+    1. user name = need to regex is letter = [A-Z, a-z\s] = not expect number, any special character,
+    2. age = integer check, 22 to 45
+    3. nationality = only 'Bangladesh'
+    4. contact number = number and 11 digit only
+    5. give proper error message or "Congratulations" message
+
+
