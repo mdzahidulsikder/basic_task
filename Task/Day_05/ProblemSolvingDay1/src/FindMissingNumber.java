@@ -16,7 +16,7 @@ public class FindMissingNumber {
         for (int i = 0; i<arr.length-1; i++){
             arr[i] = input.nextInt();
             if (arr[i]>arrSize || arr[i]<0){
-                System.out.println("You can not input over max number:" + arrSize);
+                System.out.println("You can not input less than 0 or  over maximum array size :" + arrSize);
                 throw new Exception("Wrong input");
             }
             sumValue = sumValue+arr[i];

@@ -24,11 +24,11 @@ public class HighestAndLowestFromArray {
             }
         }
 
-        System.out.println("Unsorted array: " + Arrays.toString(array));
-        System.out.println(min + " minimum");
-        System.out.println(max + " maximum");
-        Arrays.sort(array);
-        System.out.println("Sorted array: " + Arrays.toString(array));
+
+        System.out.println( "minimum number : " + min);
+        System.out.println( "maximum number : " + max );
+
+
     }
 }
 

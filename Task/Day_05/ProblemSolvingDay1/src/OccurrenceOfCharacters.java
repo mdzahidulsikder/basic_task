@@ -8,8 +8,11 @@ public class OccurrenceOfCharacters {
         Scanner input = new Scanner(System.in);
 
         System.out.print("Enter your word : ");
-        inputWord = input.nextLine().toLowerCase();
-
+        inputWord = input.nextLine().toLowerCase().replace(" ","");
+        if (inputWord == null || inputWord.isBlank() || inputWord.isEmpty()){
+            System.out.println("please input a valid word.");
+            throw new RuntimeException("wrong input");
+        }
         char[][] arrChar = new char[1][inputWord.length()];
 
         for (int i = 0; i < inputWord.length(); i++) {

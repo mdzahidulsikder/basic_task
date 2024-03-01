@@ -9,7 +9,7 @@ public class RemoveDuplicateElement {
         ArrayList<Integer> arrayList = new ArrayList<>();
         System.out.print("Input the array sizes: ");
         arrSize = input.nextInt();
-        System.out.print("Input the array value: ");
+        System.out.println("Input the array value: ");
 
         for (int i = 0; i < arrSize; i++) {
             value = input.nextInt();

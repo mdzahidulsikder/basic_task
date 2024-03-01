@@ -5,7 +5,7 @@ public class SumPairForGivenNumber {
         Scanner input = new Scanner(System.in);
         int[] arr = new int[6];
         int givenNum, sum, totalPair=0;
-        System.out.println("Input Integer number: ");
+        System.out.println("Input 6 Integer number: ");
         for (int i = 0; i<arr.length; i++){
             arr[i] = input.nextInt();
         }
@@ -21,7 +21,7 @@ public class SumPairForGivenNumber {
             }
         }
         if (totalPair == 0 ){
-            System.out.println("there is no pair value.");
+            System.out.println("There is no pair value.");
         }
 
     }
