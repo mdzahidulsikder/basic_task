@@ -32,55 +32,86 @@ public class Main {
             hashMapSort.put(entry.getKey(), entry.getValue());
         }
 
-        System.out.println("1. Enter the student name: ");
-        String searchName = input.next();
+        while (true) {
+            displayMenu();
+            int value = input.nextInt();
+            switch (value) {
+                case 1: {
+                    System.out.println("1. Enter the student name: ");
+                    String searchName = input.next();
 
-        String detailsAndPosition = findDetailsAndPositionByName(hashList, searchName);
+                    String detailsAndPosition = findDetailsAndPositionByName(hashList, searchName);
 
-        if (!detailsAndPosition.equals("")) {
-            System.out.println(detailsAndPosition);
-        } else {
-            System.out.println("No student found with the entered name");
-        }
+                    if (!detailsAndPosition.equals("")) {
+                        System.out.println(detailsAndPosition);
+                    } else {
+                        System.out.println("No student found with the entered name");
+                    }
+                    break;
+                }
+                case 2: {
+                    System.out.print("2. Enter the position: ");
+                    int positions = input.nextInt();
+                    List<String> nameAndMarks = findNameAndMarksByPosition(hashList, positions);
+                    if (!nameAndMarks.isEmpty()) {
+                        for (String nameAndMark : nameAndMarks) {
+                            System.out.println(nameAndMark);
+                        }
+                    }
+                    break;
+                }
 
+                case 3: {
+                    System.out.println("3. Enter the mark: ");
+                    double searchMark = input.nextDouble();
+                    List<String> nameAndPositions = findNameAndPositionByMarks(hashList, searchMark);
+                    if (!nameAndPositions.isEmpty()) {
 
-        System.out.print("2. Enter the position: ");
-        int positions = input.nextInt();
-        List<String> nameAndMarks = findNameAndMarksByPosition(hashList, positions);
-        if (!nameAndMarks.isEmpty()) {
-            for (String nameAndMark : nameAndMarks) {
-                System.out.println(nameAndMark);
+                        for (String result : nameAndPositions) {
+                            System.out.println(result);
+                        }
+                    } else {
+                        System.out.println("No one got this marks");
+                    }
+                    break;
+                }
+                case 4: {
+                    System.out.println("Searching by name and marks \n4. Enter the student name: ");
+                    String searchName2 = input.next();
+                    System.out.println("Enter the marks: ");
+                    double searchMark2 = input.nextDouble();
+
+                    String detailsAndPositionByName = findDetailsAndPositionByNameAndMark(hashList, searchName2, searchMark2);
+
+                    if (!detailsAndPositionByName.equals("")) {
+                        System.out.println(detailsAndPositionByName);
+                    } else {
+                        System.out.println("No student found with the entered name and marks");
+                    }
+                    break;
+                }
+
+                case 0: {
+                    System.out.println("You are existed.");
+                    return;
+                }
+                default: {
+                    System.out.println("Wrong Input.");
+                }
             }
 
-        }
-
-        System.out.println("3. Enter the mark: ");
-        double searchMark = input.nextDouble();
-        List<String> nameAndPositions = findNameAndPositionByMarks(hashList, searchMark);
-        if (!nameAndPositions.isEmpty()) {
-
-            for (String result : nameAndPositions) {
-                System.out.println(result);
-            }
-        } else {
-            System.out.println("No one got this marks");
-        }
-
-
-        System.out.println("1. Enter the student name: ");
-        String searchName2 = input.next();
-        System.out.println("Enter the marks: ");
-        double searchMark2 = input.nextDouble();
-
-        String detailsAndPositionByName = findDetailsAndPositionByNameAndMark(hashList, searchName2, searchMark2);
-
-        if (!detailsAndPosition.equals("")) {
-            System.out.println(detailsAndPositionByName);
-        } else {
-            System.out.println("No student found with the entered name and marks");
         }
     }
 
+
+    private static void displayMenu() {
+        System.out.println("................................\n" +
+                "1. To search by Name press: 1, \n" +
+                "2. To search by Position press: 2, \n" +
+                "3. To search by Marks press: 3, \n" +
+                "4. To search by name and marks press: 4, \n" +
+                "5. To close press: 0\n");
+    }
 
 
     private static String findDetailsAndPositionByName(List<Map.Entry<String, Double>> sortedList, String searchName) {
