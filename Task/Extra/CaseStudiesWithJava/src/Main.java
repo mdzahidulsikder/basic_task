@@ -1,22 +1,39 @@
 import java.util.*;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws ValidationException {
 
 
-        String name;
+        String name ;
         double mark;
+
+        String regex = "^[a-zA-z]+";
+        String dicRegex = "^[+-]?\\\\d+(\\\\.\\\\d+)?$";
+
+
+
         System.out.println("How many students add to your database:");
 
         Scanner input = new Scanner(System.in);
-        int databaseSize = input.nextInt();
+        int databaseSize = Integer.parseInt(input.nextLine());
 
         HashMap<String, Double> hashMap = new HashMap<>();
         for (int i = 0; i < databaseSize; i++) {
+
             System.out.println("Enter Student name: ");
-            name = input.next();
+            name = input.nextLine();
+            if (!name.matches(regex)) {
+                throw new ValidationException("Input a valid name.");
+            }
             System.out.println("Enter mark: ");
-            mark = input.nextDouble();
+            String marks = input.nextLine();
+            if (!marks.matches(dicRegex)) {
+                mark = Double.parseDouble(marks);
+
+            } else {
+                throw new ValidationException("Input valid decimal marks.");
+            }
+
             hashMap.put(name, mark);
         }
 
@@ -115,53 +132,107 @@ public class Main {
 
 
     private static String findDetailsAndPositionByName(List<Map.Entry<String, Double>> sortedList, String searchName) {
-        for (int i = 0; i < sortedList.size(); i++) {
-            Map.Entry<String, Double> entry = sortedList.get(i);
-            if (entry.getKey().equals(searchName)) {
-                double marks = entry.getValue();
-                int position = i + 1;
-                return "Student " + searchName + " has marks " + marks + " and is at position " + position;
+
+
+        try {
+            if (sortedList == null || searchName == null) {
+                throw new IllegalArgumentException("Input parameters cannot be null");
             }
+
+            String regex = "^[a-zA-Z ]+";
+            boolean matchName = searchName.matches(regex);
+
+            if (matchName) {
+                for (int i = 0; i < sortedList.size(); i++) {
+                    Map.Entry<String, Double> entry = sortedList.get(i);
+                    if (entry.getKey().equals(searchName)) {
+                        double marks = entry.getValue();
+                        int position = i + 1;
+                        return "Student " + searchName + " has marks " + marks + " and is at position " + position;
+                    }
+                }
+                return "Student " + searchName + " not found in the list";
+            } else {
+                throw new ValidationException("Invalid name. Only alphabetical characters and spaces are allowed.");
+            }
+        } catch (ValidationException e) {
+            return e.getMessage();
+        } catch (Exception e) {
+            System.out.println(e);
+            return "An unexpected error occurred";
         }
-        return "";
     }
 
 
+
     private static List<String> findNameAndPositionByMarks(List<Map.Entry<String, Double>> sortedList, double searchMark) {
-        List<String> nameAndPositions = new ArrayList<>();
-        for (int i = 0; i < sortedList.size(); i++) {
-            if (sortedList.get(i).getValue().equals(searchMark)) {
-                String name = sortedList.get(i).getKey();
-                int position = i + 1;
-                nameAndPositions.add(position + ". Student name = " + name + " and is at position " + position);
+
+        try {
+            List<String> nameAndPositions = new ArrayList<>();
+
+            if (sortedList == null) {
+                throw new IllegalArgumentException("Sorted list cannot be null");
             }
+
+            String regex = "^[+-]?\\d+(\\.\\d+)?$";
+            boolean matchMark = String.valueOf(searchMark).matches(regex);
+
+            if (matchMark) {
+                for (int i = 0; i < sortedList.size(); i++) {
+                    if (sortedList.get(i).getValue().equals(searchMark)) {
+                        String name = sortedList.get(i).getKey();
+                        int position = i + 1;
+                        nameAndPositions.add(position + ". Student name = " + name + " and is at position " + position);
+                    }
+                }
+
+                if (nameAndPositions.isEmpty()) {
+                    return Collections.singletonList("Not found by this mark.");
+                }
+            } else {
+                return Collections.singletonList("Input valid marks.");
+            }
+            return nameAndPositions;
+
+        } catch (Exception e) {
+            System.out.println(e);
+            return Collections.singletonList("An unexpected error occurred");
         }
-        return nameAndPositions;
+
     }
 
 
     private static List<String> findNameAndMarksByPosition(List<Map.Entry<String, Double>> sortedList, int searchPosition) {
-        List<String> nameAndMarks = new ArrayList<>();
-        if (searchPosition > 0 && searchPosition <= sortedList.size()) {
-            String name = sortedList.get(searchPosition - 1).getKey();
-            double marks = sortedList.get(searchPosition - 1).getValue();
-            nameAndMarks.add("Student name is : " + name + " and marks is : " + marks);
+        try {
+            List<String> nameAndMarks = new ArrayList<>();
+            if (searchPosition > 0 && searchPosition <= sortedList.size()) {
+                String name = sortedList.get(searchPosition - 1).getKey();
+                double marks = sortedList.get(searchPosition - 1).getValue();
+                nameAndMarks.add("Student name is : " + name + " and marks is : " + marks);
+            }else {
+                nameAndMarks.add("Invalid position.");
+            }
+            return nameAndMarks;
+        }catch (Exception e){
+            return Collections.singletonList("Position is not valid.");
         }
-        return nameAndMarks;
     }
 
 
     private static String findDetailsAndPositionByNameAndMark(List<Map.Entry<String, Double>> sortedList, String searchName, double searchMark) {
-        for (int i = 0; i < sortedList.size(); i++) {
-            Map.Entry<String, Double> entry = sortedList.get(i);
-            if (entry.getKey().equals(searchName) && entry.getValue().equals(searchMark)) {
-                int position = i + 1;
-                return "Student " + searchName + " with marks " + searchMark + " is at position " + position;
+
+        try {
+            for (int i = 0; i < sortedList.size(); i++) {
+                Map.Entry<String, Double> entry = sortedList.get(i);
+                if (entry.getKey().equals(searchName) && entry.getValue().equals(searchMark)) {
+                    int position = i + 1;
+                    return "Student " + searchName + " with marks " + searchMark + " is at position " + position;
+                }
             }
+            return "";
+        }catch (Exception e){
+           return e.getMessage();
         }
-        return "";
     }
-
-
 }
 
