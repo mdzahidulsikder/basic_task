@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.example</groupId>
-    <artifactId>HTTP_Problems</artifactId>
+    <artifactId>HTTP_Problem</artifactId>
     <version>1.0-SNAPSHOT</version>
 
     <properties>
@@ -13,20 +13,5 @@
         <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
-
-    <dependencies>
-<!--        <dependency>-->
-<!--            <groupId>org.jsoup</groupId>-->
-<!--            <artifactId>jsoup</artifactId>-->
-<!--            <version>1.16.1</version>-->
-<!--        </dependency>-->
-
-<!--        <dependency>-->
-<!--            <groupId>org.jsoup</groupId>-->
-<!--            <artifactId>jsoup</artifactId>-->
-<!--            <version>1.14.3</version>-->
-<!--        </dependency>-->
-
-    </dependencies>
 
 </project>
