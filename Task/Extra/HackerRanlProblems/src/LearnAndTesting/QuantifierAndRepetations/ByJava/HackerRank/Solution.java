@@ -7,6 +7,7 @@ import java.util.regex.Matcher ;
 public class Solution {
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in) ;
+        String bf = in.nextLine();
         String s = in.nextLine() ;
         String pattern = "^[0-9]{2}(-|:|---|\\.){1}[0-9]{2}\\1[0-9]{2}\\1[0-9]{2}$";
         Pattern pat  = Pattern.compile(pattern) ;
