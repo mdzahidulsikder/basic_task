@@ -32,15 +32,15 @@ HttpRequest httpRequest = HttpRequest.newBuilder()
         .build()
 try {
     HttpResponse<String> httpResponse = httpClient.send(httpRequest, HttpResponse.BodyHandlers.ofString())
-    // output of html page.
+
     def htmlSourceCode = httpResponse.body()
-    // println(htmlSourceCode)
+
 
     String searchTableRegex = "<table>([\\s\\S]*?)<\\/table>"
-    // all table with html tag
+
     def tableList = []
 
-    //table data here
+
     def businessList = []
 
     Pattern tableMatchPattern = Pattern.compile(searchTableRegex)
@@ -50,56 +50,40 @@ try {
     while (matcher.find()) {
         tableList.add(matcher.group(1))
     }
-    // total table found
-     //println (tableList)
     def trRegex = "<tr>([\\s\\S]*?)<\\/tr>"
     def trMatcher = tableList =~ trRegex
-        while (trMatcher.find()){
-            println(trMatcher.group(1))
+    while (trMatcher.find()) {
+        def trData = trMatcher.group(1)
+
+        def tdRegex = "<td>(.*?\\s*)<abbr\\s*title=\\\"[a-zA-z].*\\\">(.*)<\\/abbr>\\s*<\\/td>\\s*<td>(.*)<\\/td>\\s*<td>(.*)<\\/td>\\s*<td>(.*)<\\/td>\\s*<td>(.*)<\\/td>\\s*<td>(.*)<\\/td>"
+
+        def tdMatcher = trData =~ tdRegex
+        while (tdMatcher.find()) {
+            def businessData = [
+
+                    businessName     : (tdMatcher.group(1) + " " + tdMatcher.group(2)).replaceAll("(?s)\\s+", " ").replaceAll(/&amp;/, " & "),
+                    registeredAddress: tdMatcher.group(3) + "UK",
+                    penaltyAmount    : tdMatcher.group(6),
+                    description      : "This entity appears on the UK Government Corporate Report published list of businesses that have not complied with the regulations. " + tdMatcher.group(5)
+            ]
+            businessList << businessData
         }
 
+        def table04Regex = "<td>(.*?\\s*)<abbr\\s*title=\"[A-Za-z].*\">(.*)<\\/abbr>(.*)<\\/td>\\s*<td>(.*)<\\/td>\\s*<td>(.*)<\\/td>\\s*<td>(.*)<\\/td>\\s*<td>(.*)<\\/td>"
+        def table04Matcher = trData =~ table04Regex
 
-    // <tbody>(.*?\s*)<tr>([\s\S]*?)<\/tr>
-
-
-/**
- *
-
-
-
-    for (int i = 0; i < 4; i++) {
-        String table = tableList.get(i)
-        def regexTbl = "<td>(.*?\\s*)<abbr\\s*title=\"[a-zA-z].*\">(.*)<\\/abbr>\\s*<\\/td>\\s*<td>(.*)<\\/td>\\s*<td>(.*)<\\/td>\\s*<td>(.*)<\\/td>\\s*<td>(.*)<\\/td>\\s*<td>(.*)<\\/td>"
-
-        def tableMatcher = table =~ regexTbl
-
-        while (tableMatcher.find()) {
+        while (table04Matcher.find()) {
             def businessData = [
-                    businessName     : tableMatcher.group(1) + " " + tableMatcher.group(2),
-                    registeredAddress: tableMatcher.group(3) + "UK",
-                    penaltyAmount    : tableMatcher.group(6),
-                    description      : "This entity appears on the UK Government Corporate Report published list of businesses that have not complied with the regulations. " + table03Matcher.group(5)
+                    businessName     : (table04Matcher.group(1) + " " + table04Matcher.group(2) + table04Matcher.group(3)).replaceAll("(?s)\\s+"," ").replaceAll("((?s)&amp;)","\\&"),
+                    registeredAddress: table04Matcher.group(4) + "UK",
+                    penaltyAmount    : table04Matcher.group(7),
+                    description      : "This entity appears on the UK Government Corporate Report published list of businesses that have not complied with the regulations. " + table04Matcher.group(6)
+
             ]
             businessList << businessData
         }
     }
 
-    String last = tableList.get(3)
-    // println(last)
-    def table04Regex = "<td>(.*?\\s*)<abbr\\s*title=\"[A-Za-z].*\">(.*)<\\/abbr>(.*)<\\/td>\\s*<td>(.*)<\\/td>\\s*<td>(.*)<\\/td>\\s*<td>(.*)<\\/td>\\s*<td>(.*)<\\/td>"
-    def table04Matcher = tableList =~ table04Regex
-    while (table04Matcher.find()) {
-        def businessData = [
-                businessName     : table04Matcher.group(1) + " " + table04Matcher.group(2) + table04Matcher.group(3),
-                registeredAddress: table04Matcher.group(4) + "UK",
-                penaltyAmount    : table04Matcher.group(5),
-                description      : "This entity appears on the UK Government Corporate Report published list of businesses that have not complied with the regulations. " + table04Matcher.group(6)
-
-        ]
-        businessList << businessData
-    }
-
-// building xml file
     def writer = new StringWriter()
     def xmlBuilder = new MarkupBuilder(writer)
 
@@ -119,9 +103,6 @@ try {
     Path outputFilePath = Paths.get("abc.xml")
     Files.write(outputFilePath, xmlString.getBytes())
 
- */
-
 } catch (Exception e) {
     e.stackTrace
 }
-//C:\Users\Zahid\Desktop\Task\github_2\Task\Extra\HackerRanlProblems\src\LearnAndTesting\QuantifierAndRepetations\HtmlParsing
